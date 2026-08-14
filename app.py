@@ -1,14 +1,14 @@
-from flask import Flask, render_template
-from flask_socketio import SocketIO, emit
+from flask import Flask, render_template, jsonify
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '!secret'
-
-socketio = SocketIO(app)
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/404')
+def error_404():
+    return '404 Not Found', 404
 
 @app.route('/phone')
 def phone():
@@ -18,9 +18,19 @@ def phone():
 def tablet():
     return render_template('tablet.html')
 
-@socketio.on('button_click')
-def handle_button_click(data):
-    emit('update_phone', data, broadcast=True)
+@app.route('/api/click', methods=['POST'])
+def trigger_click():
+    global clicked
+    clicked = True
+    return jsonify({"status": "ok"})
+
+@app.route('/api/click/status')
+def click_status():
+    global clicked
+    if clicked:
+        clicked = False
+        return jsonify({"clicked": True})
+    return jsonify({"clicked": False})
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    app.run(debug=True)

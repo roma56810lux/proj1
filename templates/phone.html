@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Phone (Получатель)</title>
-    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 </head>
 <body style="text-align: center; padding-top: 50px;">
     <h2>Страница Phone</h2>
@@ -12,13 +11,19 @@
     </div>
 
     <script>
-        const socket = io();
-        const statusDiv = document.getElementById('status');
-
-        // Слушаем событие от сервера
-        socket.on('update_phone', (data) => {
-            statusDiv.style.color = 'green';
-            statusDiv.innerText = `Клик получен! Время: ${data.time}`;
+        setInterval(() => {
+            fetch('/api/click/status')
+            .then(response => response.json())
+            .then(data => {
+                const statusDiv = document.getElementById('status');
+                if (data.clicked) {
+                    statusDiv.textContent = 'Клик получен!';
+                    statusDiv.style.color = 'green';
+                } else {
+                    statusDiv.textContent = 'Ожидание клика с планшета...';
+                    statusDiv.style.color = 'gray';
+                }
+            })
         });
     </script>
 </body>

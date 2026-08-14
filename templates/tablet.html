@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Tablet (Отправитель)</title>
-    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 </head>
 <body style="text-align: center; padding-top: 50px;">
     <h2>Страница Tablet</h2>
@@ -12,15 +11,8 @@
     </button>
 
     <script>
-        const socket = io();
-        const btn = document.getElementById('clickBtn');
-
-        btn.addEventListener('click', () => {
-            // Отправляем данные на сервер
-            socket.emit('tablet_click', {
-                clicked: true,
-                time: new Date().toLocaleTimeString()
-            });
+        document.getElementById('clickBtn').addEventListener('click', () => {
+            fetch('/api/click', {method: 'POST'});
         });
     </script>
 </body>
