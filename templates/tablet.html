@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Tablet (Отправитель)</title>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body style="text-align: center; padding-top: 50px;">
+    <h2>Страница Tablet</h2>
+    <button id="clickBtn" style="padding: 20px 40px; font-size: 20px;">
+        Нажать на планшете
+    </button>
+
+    <script>
+        const socket = io();
+        const btn = document.getElementById('clickBtn');
+
+        btn.addEventListener('click', () => {
+            // Отправляем данные на сервер
+            socket.emit('tablet_click', {
+                clicked: true,
+                time: new Date().toLocaleTimeString()
+            });
+        });
+    </script>
+</body>
+</html>
