@@ -18,6 +18,8 @@ def phone():
 def tablet():
     return render_template('tablet.html')
 
+clicked = False
+
 @app.route('/api/click', methods=['POST'])
 def trigger_click():
     global clicked
@@ -30,7 +32,8 @@ def click_status():
     if clicked:
         clicked = False
         return jsonify({"clicked": True})
-    return jsonify({"clicked": False})
+    else:
+        return jsonify({"clicked": False})
 
 if __name__ == '__main__':
     app.run(debug=True)

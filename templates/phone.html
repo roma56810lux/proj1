@@ -17,11 +17,7 @@
             .then(data => {
                 const statusDiv = document.getElementById('status');
                 if (data.clicked) {
-                    statusDiv.textContent = 'Клик получен!';
-                    statusDiv.style.color = 'green';
-                } else {
-                    statusDiv.textContent = 'Ожидание клика с планшета...';
-                    statusDiv.style.color = 'gray';
+                    window.location.href = '/404';
                 }
             })
         });
